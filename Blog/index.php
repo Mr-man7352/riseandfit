@@ -7,13 +7,13 @@ include 'connection.php';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     //Check for duplicate and not added in database
-    $dup = mysqli_query($conn, "select * from `blogsdb`.`emails` where email = '$email' ");
+    $dup = mysqli_query($conn, "select * from `emails` where email = '$email' ");
     if (mysqli_num_rows($dup) > 0) {
         echo "<script>alert('Already Subscribed')</script>";
     } else {
 
         //Inserting (emails of newsletter) into database
-        $sql = "INSERT INTO `blogsdb`.`emails` ( `email`, `dt`) 
+        $sql = "INSERT INTO `emails` ( `email`, `dt`) 
           VALUES ('$email', current_timestamp())";
 
         // echo $sql;
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
             <?php
             include "pagination.php";
             //Traversing database of blog post and print it on screen
-            $sql = 'SELECT * FROM `blogsdb`.`blogpost` ORDER BY id DESC LIMIT ' . $this_page_first_result . ',' .  $results_per_page;
+            $sql = 'SELECT * FROM `blogpost` ORDER BY id DESC LIMIT ' . $this_page_first_result . ',' .  $results_per_page;
             $query = mysqli_query($conn, $sql);
             while ($item = mysqli_fetch_array($query)) {
 

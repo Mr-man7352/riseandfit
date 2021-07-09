@@ -8,18 +8,18 @@ if (isset($_POST['submit'])) { // Check press or not Post Comment Button
     $email = $_POST['email']; // Get Email from form
     $comment = $_POST['comment']; // Get Comment from form
     //Check for duplicate comment by same id
-    $dup = mysqli_query($conn, "select * from `blogsdb`.`comments` where email = '$email' ");
+    $dup = mysqli_query($conn, "select * from `comments` where email = '$email' ");
     if (mysqli_num_rows($dup) > 0) {
         echo "<script>alert('Already Post comment')</script>";
     } else {
-        $sql = "INSERT INTO `blogsdb`.`comments` (name, email, comment)
+        $sql = "INSERT INTO `comments` (name, email, comment)
 			VALUES ('$name', '$email', '$comment')";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             echo "<script>alert('Comment added successfully.')</script>";
             $id = $_REQUEST['id'];
             // echo $id;
-            header("Location:http://localhost/riseandfit/Blog/BlogPage/displayPost.php?id=$id");
+            header("Location:https://riseandfit.com/Blog/BlogPage/displayPost.php?id=$id");
             exit;
         } else {
             echo "<script>alert('Comment does not add.')</script>";
@@ -32,13 +32,13 @@ if (isset($_POST['submit'])) { // Check press or not Post Comment Button
 if (isset($_POST['submits'])) {
     $email = $_POST['emails'];
     //Check for duplicate and not added in database
-    $dup = mysqli_query($conn, "select * from `blogsdb`.`emails` where email = '$email' ");
+    $dup = mysqli_query($conn, "select * from `emails` where email = '$email' ");
     if (mysqli_num_rows($dup) > 0) {
         echo "<script>alert('Already Subscribed')</script>";
     } else {
 
         //Inserting (emails of newsletter) into database
-        $sql = "INSERT INTO `blogsdb`.`emails` ( `email`, `dt`) 
+        $sql = "INSERT INTO `emails` ( `email`, `dt`) 
             VALUES ('$email', current_timestamp())";
 
         // echo $sql;
@@ -46,7 +46,7 @@ if (isset($_POST['submits'])) {
             echo "<script>alert('Added Successfully')</script>";
             $id = $_REQUEST['id'];
             // echo $id;
-            header("Location:http://localhost/riseandfit/Blog/BlogPage/displayPost.php?id=$id");
+            header("Location:https://riseandfit.com/Blog/BlogPage/displayPost.php?id=$id");
         } else {
             echo "Error: $sql <br> $con->error";
         }
@@ -137,7 +137,7 @@ if (isset($_POST['submits'])) {
             //Loop to display blogpost Title and time from database
             if (isset($_REQUEST['id'])) {
                 $id = $_REQUEST['id'];
-                $sql = "SELECT * FROM `blogsdb`.`blogpost`  WHERE id = $id";
+                $sql = "SELECT * FROM `blogpost`  WHERE id = $id";
 
                 $query = mysqli_query($conn, $sql);
 
@@ -212,7 +212,7 @@ if (isset($_POST['submits'])) {
                 <div class="prev-comments">
                     <?php
 
-                    $sql = "SELECT * FROM `blogsdb`.`comments` ORDER BY id DESC";
+                    $sql = "SELECT * FROM `comments` ORDER BY id DESC";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
